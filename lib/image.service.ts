@@ -1,14 +1,16 @@
 
 import { supabase } from './supabase.server';
 
-export async function uploadProductImage(file: File) {
-  const ext = file.name.split('.').pop();
-  const fileName = `${crypto.randomUUID()}.${ext}`;
+export async function uploadProductImage(file: File[], folder: string) {
+  const uploads = file.map(async (f)=>{
+
+  const ext = f.name.split('.').pop();
+  const fileName = `${folder}/${crypto.randomUUID()}.${ext}`;
 
   const { error } = await supabase.storage
     .from('products')
-    .upload(fileName, file, {
-      contentType: file.type,
+    .upload(fileName, f, {
+      contentType: f.type,
       upsert: false
     });
 
@@ -19,4 +21,8 @@ export async function uploadProductImage(file: File) {
     .getPublicUrl(fileName);
 
   return data.publicUrl;
+  });
+
+  return Promise.all(uploads);
+
 }

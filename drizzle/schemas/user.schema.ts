@@ -6,6 +6,7 @@ export const usersTable = pgTable("users", {
   secondName: varchar("secondName"),
   email: varchar({ length: 255 }).notNull().unique(),
   imgUrl: text("imgUrl"),
+  createdAt: z.Date().notNull().default(new Date)
 });
 
 export type User = typeof usersTable.$inferSelect;

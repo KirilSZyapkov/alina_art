@@ -1,5 +1,6 @@
 'use server';
 
+import { auth } from '@clerk/nextjs/server';
 import { productCreateSchema } from '@/lib/product.schema';
 import {
   getAllProducts,
@@ -14,11 +15,20 @@ export async function getProductsAction() {
 }
 
 export async function createProductAction(formData: FormData) {
+  // const { userId } = auth();
+  // if (!userId) throw new Error('Unauthorized');
+
+  const userId = "test";
+
+  const images = formData
+    .getAll('images')
+    .filter(f => f instanceof File && f.size > 0) as File[];
+
   const rawData = {
   title: formData.get("title"),
   price: formData.get("price"),
   description: formData.get("description"),
-  image: formData.get("image")
+  images
   };
 
   const parsed = productCreateSchema.safeParse(rawData);
@@ -29,7 +39,7 @@ export async function createProductAction(formData: FormData) {
     }
   };
 
-  await createProduct(parsed.data);
+  await createProduct(parsed.data, userId);
   revalidatePath('/admin/dashboard/list');
 }
 
