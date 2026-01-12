@@ -1,10 +1,11 @@
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { text, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  age: integer().notNull(),
+  id: text("id").primaryKey(),
+  firstName: varchar("firstName").notNull().length(3),
+  secondName: varchar("secondName"),
   email: varchar({ length: 255 }).notNull().unique(),
+  imgUrl: text("imgUrl"),
 });
 
 export type User = typeof usersTable.$inferSelect;
