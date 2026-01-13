@@ -1,9 +1,11 @@
 // drizzle/schema/product-images.ts
 import {
   pgTable,
-  text
-} from 'drizzle-orm/pg-core'
-import { productsTable } from './products.schema'
+  text,
+  integer
+} from 'drizzle-orm/pg-core';
+import { productsTable } from './products.schema';
+import { relations } from 'drizzle-orm';
 
 export const productImages = pgTable('product_images', {
   id: text('id').primaryKey(),
@@ -12,5 +14,12 @@ export const productImages = pgTable('product_images', {
     .references(() => productsTable.id, { onDelete: 'cascade' }),
 
   url: text('url').notNull(),
+  order: integer('order').default(0).notNull()
 })
 
+export const productImagesRelations = relations(productImages, ({one})=>({
+  product: one(productsTable, {
+    fields: [productImages.productId],
+    references: [productsTable.id]
+  })
+}))

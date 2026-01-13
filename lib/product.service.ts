@@ -7,7 +7,13 @@ import { ProductCreateInput } from './product.schema';
 import { uploadProductImage } from './image.service';
 
 export async function getAllProducts() {
-  return db.select().from(productsTable);
+  return db.query.productsTable.findMany({
+    with: {
+      images: {
+        orderBy: (images, { asc }) => [asc(images.order)]
+      }
+    },
+  });
 }
 
 export async function createProduct(data: ProductCreateInput, ownerId: string) {
