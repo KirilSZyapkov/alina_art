@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@clerk/nextjs/server';
-import { productCreateSchema } from '@/lib/product.schema';
+import { productCreateSchema } from '@/lib/product.zod_schema';
 import {
   getAllProducts,
   createProduct,
@@ -25,16 +25,16 @@ export async function createProductAction(formData: FormData) {
     .filter(f => f instanceof File && f.size > 0) as File[];
 
   const rawData = {
-  title: formData.get("title"),
-  price: formData.get("price"),
-  description: formData.get("description"),
-  images
+    title: formData.get("title"),
+    price: formData.get("price"),
+    description: formData.get("description"),
+    images
   };
 
   const parsed = productCreateSchema.safeParse(rawData);
 
-  if(!parsed.success){
-    return{
+  if (!parsed.success) {
+    return {
       errors: parsed.error.flatten().fieldErrors
     }
   };
@@ -45,7 +45,7 @@ export async function createProductAction(formData: FormData) {
 
 export async function updateProductAction(
   id: string,
-  data: Partial<{ title: string; price: string; description:string; imgUrl:string }>
+  data: Partial<{ title: string; price: string; description: string; imgUrl: string }>
 ) {
   await updateProduct(id, data);
   revalidatePath('/admin/dashboard/list');

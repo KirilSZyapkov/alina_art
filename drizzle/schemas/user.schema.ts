@@ -1,12 +1,13 @@
-import { text, pgTable, varchar } from "drizzle-orm/pg-core";
+import { text, pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: text("id").primaryKey(),
-  firstName: varchar("firstName").notNull().length(3),
+  firstName: varchar("firstName").notNull(),
   secondName: varchar("secondName"),
   email: varchar({ length: 255 }).notNull().unique(),
   imgUrl: text("imgUrl"),
-  createdAt: z.Date().notNull().default(new Date)
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow()
 });
 
 export type User = typeof usersTable.$inferSelect;

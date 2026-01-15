@@ -1,10 +1,10 @@
 // lib/product.service.ts
-import { db } from '@/drizzle/db';
+import  db  from '@/drizzle/db';
 import { usersTable } from '@/drizzle/schemas/user.schema';
 import { eq } from 'drizzle-orm';
-import { UserCreateInput } from './user.schema';
+import { UserCreateInput } from './user.zod_schema';
 
-export async function getUser(id:string) {
+export async function getUser(id: string) {
   return db.select().from(usersTable).where(eq(usersTable.id, id));
 }
 

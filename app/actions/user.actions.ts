@@ -1,19 +1,19 @@
 'use server';
 
-import { userCreateSchema } from '@/lib/user.schema';
+import { userCreateSchema } from '@/lib/user.zod_schema';
 import {
-  createUser,
-  getUser
+    createUser,
+    getUser
 } from '@/lib/user.service';
 
-export async function getUserAction(id:string) {
+export async function getUserAction(id: string) {
     return getUser(id);
 }
 
-export async function createUserAction(params:{
-    id:string,
-    firstName?:string,
-    secondName?:string,
+export async function createUserAction(params: {
+    id: string,
+    firstName?: string,
+    secondName?: string,
     email: string,
     imgUrl: string
 }) {
@@ -27,8 +27,8 @@ export async function createUserAction(params:{
 
     const parsed = userCreateSchema.safeParse(rawData);
 
-    if(!parsed.success){
-        return{
+    if (!parsed.success) {
+        return {
             errors: parsed.error.flatten().fieldErrors
         }
     };
