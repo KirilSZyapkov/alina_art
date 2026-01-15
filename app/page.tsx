@@ -3,14 +3,13 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllProducts } from "@/lib/product.service";
-import type { Product } from "@/drizzle/schemas/products.schema";
 
 export default async function HomePage() {
   const products = await getAllProducts();
 
   return (
     <article className="mx-auto max-w-7xl px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold tracking-tight">
+      <h1 className="mb-8 text-3xl font-bold tracking-tight text-center">
         Ръчно изработени подаръци
       </h1>
 
@@ -47,7 +46,7 @@ export default async function HomePage() {
 
               <CardFooter className="p-3 pt-0">
                 <span className="text-sm font-semibold">
-                  {product.price} лв
+                  {product.price} EUR
                 </span>
               </CardFooter>
             </Card>

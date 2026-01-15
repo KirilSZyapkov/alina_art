@@ -9,9 +9,7 @@ import { uploadProductImage } from './image.service';
 export async function getAllProducts<T>() {
   return db.query.productsTable.findMany({
     with: {
-      images: {
-        orderBy: (images, { asc }) => [asc(images.order)]
-      }
+      images: true
     },
   });
 }

@@ -11,7 +11,7 @@ import { relations } from 'drizzle-orm';
 
 export const productImages = pgTable('product_images', {
   id: uuid("id").defaultRandom().primaryKey(),
-  productId: text('product_id')
+  productId: uuid('product_id')
     .notNull()
     .references(() => productsTable.id, { onDelete: 'cascade' }),
 
