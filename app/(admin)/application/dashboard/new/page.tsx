@@ -1,5 +1,10 @@
+import {NewProductForm} from "@/_components/newProductForm";
+import {createProductAction} from "@/app/actions/product.actions";
+
 export default function NewProductPage(){
+    
     return(
-        <h1>Create new product</h1>
+        <NewProductForm createNewProduct={createProductAction}}/>
     )
 }
+
