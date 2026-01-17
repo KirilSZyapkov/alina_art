@@ -9,9 +9,7 @@ export const productsTable = pgTable('products', {
   title: text('title').notNull(),
   price: text("price").notNull(),
   description: text('description').notNull(),
-  ownerId: text('owner_id')
-    .notNull()
-    .references(() => usersTable.id),
+  ownerId: text('owner_id').notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow()
 });

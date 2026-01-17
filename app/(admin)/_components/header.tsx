@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { LayoutGrid, Menu, MessageCircleQuestionMark, NotebookTabs } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function AdminHeader() {
 
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
   return (
     <nav className="w-full border-b border-gray-200 bg-white/80 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -21,14 +22,15 @@ export default function AdminHeader() {
             <Link href="/application/dashboard/new" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
               <NotebookTabs /> <span className="text-xl">Нов продукт</span>
             </Link>
-            <Link href="/help" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-              <MessageCircleQuestionMark /> <span className="text-xl">Помощ</span>
-            </Link>
-            <UserButton appearance={{
-              elements: {
-                userButtonBox: { width: "100%", height: "100%" }
-              }
-            }} />
+            <div className="flex gap-5 items-center">
+              <p className="text-xl font-medium">{user?.firstName}</p>
+              <UserButton appearance={{
+                elements: {
+                  userButtonBox: { width: "100%", height: "100%" }
+                }
+                
+              }} />
+            </div>
           </SignedIn>
         </div>
         <Button

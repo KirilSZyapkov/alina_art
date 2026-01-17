@@ -5,7 +5,9 @@ import { eq } from 'drizzle-orm';
 import { UserCreateInput } from './user.zod_schema';
 
 export async function getUser(id: string) {
-  return db.select().from(usersTable).where(eq(usersTable.id, id));
+  return db.query.usersTable.findFirst({
+    where: eq(usersTable.id, id),
+  })
 }
 
 export async function createUser(newUser: UserCreateInput) {
