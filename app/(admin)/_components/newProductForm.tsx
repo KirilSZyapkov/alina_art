@@ -20,7 +20,8 @@ import { Textarea } from "@/components/ui/textarea";
 const formSchema = z.object({
   title: z.string().min(2, {message: "Product name must be at least 5 characters."}),
   price: z.string().min(1, {message: "Price must be possitive value and not 0."}),
-  description: z.string().min(10, {message: "Description must be at least 10 characters."})
+  description: z.string().min(10, {message: "Description must be at least 10 characters."}),
+  images: z.array(z.string()).min(1, {message: "Please upload at least one image."}),
 })
 
 
@@ -30,7 +31,8 @@ export function NewProductForm({createNewProduct}:{createNewProduct:()=>void}) {
     defaultValues: {
       title: "",
       price: "",
-      description: ""
+      description: "",
+      images: []
     },
   });
 
@@ -84,7 +86,7 @@ export function NewProductForm({createNewProduct}:{createNewProduct:()=>void}) {
         />
         <FormField
           control={form.control}
-          name="Images"
+          name="images"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Images</FormLabel>

@@ -1,5 +1,9 @@
+"use client";
+
 import { useState } from "react";
-import { LayoutDashboard, List, Truck, UsersRound, Menu } from "lucide-react";
+import { LayoutGrid, Menu, MessageCircleQuestionMark, NotebookTabs } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 
 export default function Header(){
@@ -10,13 +14,13 @@ export default function Header(){
                 <Link href="/" className="text-2xl font-bold text-gray-800">Alina Art </Link>
                 <div className="hidden items-center gap-6 sm:flex">
                     <Link href="/" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <List /> <span className="text-xl">Продукти</span>
+                        <LayoutGrid /> <span className="text-xl">Продукти</span>
                     </Link>
                     <Link href="/about-us" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <Truck /> <span className="text-xl">За нас</span>
+                        <NotebookTabs /> <span className="text-xl">За нас</span>
                     </Link>
                     <Link href="/help" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <Truck /> <span className="text-xl">Помощ</span>
+                        <MessageCircleQuestionMark/> <span className="text-xl">Помощ</span>
                     </Link>
                 </div>
                 <Button 
@@ -29,13 +33,13 @@ export default function Header(){
             {open && <div className="sm:hidden border-t border-gray-300 bg-white shadow-md">
                 <div className="flex flex-col space-y-4 p-4">
                     <Link href="/" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <List /> <span className="text-xl">Продукти</span>
+                        <LayoutGrid /> <span className="text-xl">Продукти</span>
                     </Link>
                     <Link href="/about-us" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <Truck /> <span className="text-xl">За нас</span>
+                        <NotebookTabs /> <span className="text-xl">За нас</span>
                     </Link>
                     <Link href="/help" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
-                        <Truck /> <span className="text-xl">Помощ</span>
+                        <MessageCircleQuestionMark /> <span className="text-xl">Помощ</span>
                     </Link>
                 </div>
             </div>}

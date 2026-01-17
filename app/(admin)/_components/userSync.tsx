@@ -1,9 +1,9 @@
 import { auth, currentUser  } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-import {createUserAction, getUserAction} from `@/app/actions/user.actions`;
+import {createUserAction, getUserAction} from "../../actions/user.actions";
 
 export default async function UserSync(){
-    const { userId } =  auth();
+    const { userId } =  await auth();
 
     if(!userId){
         redirect("/sign-in");

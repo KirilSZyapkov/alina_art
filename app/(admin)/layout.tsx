@@ -1,3 +1,5 @@
+import AdminHeader from "./_components/header";
+
 export default function AdminLayout({
   children,
 }: Readonly<{
@@ -5,7 +7,8 @@ export default function AdminLayout({
 }>) {
   return (
     <section>
-        {children}
+      <AdminHeader />
+      {children}
     </section>
   );
 }
