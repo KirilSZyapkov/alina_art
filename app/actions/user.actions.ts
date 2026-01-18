@@ -7,7 +7,8 @@ import {
 } from '@/lib/user.service';
 
 export async function getUserAction(id: string) {
-    return getUser(id);
+    const user = await getUser(id);
+    return user;
 }
 
 export async function createUserAction(params: {
@@ -33,5 +34,7 @@ export async function createUserAction(params: {
         }
     };
 
-    await createUser(parsed.data);
+    const user = await createUser(parsed.data);
+
+    return user;
 }

@@ -2,7 +2,7 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { createUserAction, getUserAction } from "../../actions/user.actions";
 
-export default async function UserSync() {
+export default async function userSync() {
     const { userId } = await auth();
 
     if (!userId) {
@@ -16,24 +16,21 @@ export default async function UserSync() {
 
     try {
         const existingUser = await getUserAction(userId);
-        console.log("(admin)/_component/userSync 19", existingUser);
-        
-        if (!existingUser) {
 
-            const newUser = {
-                id: userId,
-                firstName: user.firstName ?? '',
-                secondName: user.lastName ?? '',
-                email: user.emailAddresses[0]?.emailAddress ?? '',
-                imgUrl: user.imageUrl ?? ''
-            };
-            await createUserAction(newUser);
-        }
+        if (existingUser) return;
 
-        redirect("/application/dashboard");
+        const newUser = {
+            id: userId,
+            firstName: user.firstName ?? '',
+            secondName: user.lastName ?? '',
+            email: user.emailAddresses[0]?.emailAddress ?? '',
+            imgUrl: user.imageUrl ?? ''
+        };
+        const createdUser = await createUserAction(newUser);
     } catch (error: unknown) {
-        throw new Error("User sync failed");
+        console.error(error);
+        throw new Error('User synchronization failed');
     }
 
-    
+
 }
