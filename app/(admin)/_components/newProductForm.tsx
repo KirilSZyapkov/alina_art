@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   title: z.string().min(2, {message: "Product name must be at least 5 characters."}),
   price: z.string().min(1, {message: "Price must be possitive value and not 0."}),
   description: z.string().min(10, {message: "Description must be at least 10 characters."}),
@@ -25,7 +25,7 @@ const formSchema = z.object({
 })
 
 
-export function NewProductForm({createNewProduct}:{createNewProduct:()=>void}) {
+export function NewProductForm({createNewProduct}:{createNewProduct:(values: z.infer<typeof formSchema>)=>void}) {
    const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,7 +39,8 @@ export function NewProductForm({createNewProduct}:{createNewProduct:()=>void}) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    console.log(values);
+    createNewProduct(values);
   }
 
   return (
