@@ -211,8 +211,8 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
                       onDragLeave={handleDragLeave}
                       onDrop={handleDrop}
                       className={`relative border-2 border-dashed rounded-lg p-8 md:p-12 transition-all ${isDragging
-                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                          : "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
+                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                        : "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
                         }`}
                     >
                       <input
