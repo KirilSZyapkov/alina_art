@@ -1,6 +1,8 @@
 import { auth } from '@clerk/nextjs/server';
 import { getProductsAction } from '@/app/actions/product.actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Assuming Shadcn Card components are available
+import { redirect } from 'next/navigation';
+import Image from 'next/image';
 
 export default async function ListPage() {
 
@@ -32,9 +34,16 @@ export default async function ListPage() {
                     {allProducts.map((p) => (
                         <Card key={p.id} className="shadow-lg">
                             <CardHeader>
-                                <CardTitle>{p.name}</CardTitle>
+                                <Image
+                                    src={p.images[0].url || '/placeholder.png'}
+                                    alt={p.title}
+                                    width={400}
+                                    height={300}
+                                    className="object-cover w-full h-48 rounded-t-lg"
+                                />
                             </CardHeader>
                             <CardContent>
+                                <CardTitle>{p.title}</CardTitle>
                                 <p>{p.description}</p>
                                 <p className="font-semibold">${p.price}</p>
                             </CardContent>

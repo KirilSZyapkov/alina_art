@@ -10,29 +10,20 @@ import {
   getProductById
 } from '@/lib/product.service';
 import { revalidatePath } from 'next/cache';
+import z from 'zod';
+
 
 export async function getProductsAction() {
   return getAllProducts();
 }
 
-export async function createProductAction(formData: FormData) {
-  // const { userId } = auth();
-  // if (!userId) throw new Error('Unauthorized');
+export async function createProductAction(formData: z.infer<typeof productCreateSchema>) {
 
-  const userId = "test";
+  const { userId } = await auth();
+  
+  if (!userId) throw new Error('Unauthorized');
 
-  const images = formData
-    .getAll('images')
-    .filter(f => f instanceof File && f.size > 0) as File[];
-
-  const rawData = {
-    title: formData.get("title"),
-    price: formData.get("price"),
-    description: formData.get("description"),
-    images
-  };
-
-  const parsed = productCreateSchema.safeParse(rawData);
+  const parsed = productCreateSchema.safeParse(formData);
 
   if (!parsed.success) {
     return {

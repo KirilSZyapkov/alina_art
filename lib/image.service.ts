@@ -1,27 +1,24 @@
 
 import { supabase } from './supabase.server';
 
-export async function uploadProductImage(file: File[], folder: string) {
+export async function uploadProductImage(file: File[], ownerId:string, productId:string, productName: string) {
   const uploads = file.map(async (f, index)=>{
 
-  const ext = f.name.split('.').pop();
-  const fileName = `${folder}/${crypto.randomUUID()}.${ext}`;
+  const filePath = `${ownerId}/${productId}/${productName}/${Date.now()}-${f.name}`;
 
   const { error } = await supabase.storage
-    .from('products')
-    .upload(fileName, f, {
+    .from('alina_art')
+    .upload(filePath, f, {
       contentType: f.type,
       upsert: false
     });
 
   if (error) throw error;
 
-  const { data } = supabase.storage
-    .from('products')
-    .getPublicUrl(fileName);
+   const imgUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/alina_art/${filePath}`;
 
   return {
-    url: data.publicUrl,
+    url: imgUrl,
     order: index
   };
   });

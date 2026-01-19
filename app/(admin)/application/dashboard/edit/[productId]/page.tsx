@@ -1,30 +1,31 @@
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-import {getProductByIdAction} from '@/app/actions/product.actions';
+import { getProductByIdAction } from '@/app/actions/product.actions';
 import { EditProductForm } from '@/app/(admin)/_components/editProductForm';
 
-import { formSchema } from '@/app/(admin)/_components/newProductForm'; 
+import { formSchema } from '@/app/(admin)/_components/newProductForm';
 
-export async function EditProductPage({ params }: { params: Promise<{productId: string}> }) {
+export default async function EditProductPage({ params }: { params: Promise<{ productId: string }> }) {
     const { userId } = await auth();
-    
-     if (!userId) {
+
+    if (!userId) {
         redirect("/sign-in");
     };
 
     const { productId } = await params;
-    if(!productId) {
+    if (!productId) {
         throw new Error("Product ID is required");
     }
 
     const product = await getProductByIdAction(productId);
 
     if (!product) {
-       throw new Error("Product not found");
+        throw new Error("Product not found");
     }
 
-    return(
-        <EditProductForm handleUpdateProduct={handleUpdateProduct} product={product} />
+    return (
+        // <EditProductForm handleUpdateProduct={handleUpdateProduct} product={product} />
+        null
     )
 
 }

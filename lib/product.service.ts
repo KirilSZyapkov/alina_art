@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { ProductCreateInput } from './product.zod_schema';
 import { uploadProductImage } from './image.service';
 
+
 export async function getAllProducts<T>() {
   return db.query.productsTable.findMany({
     with: {
@@ -16,16 +17,15 @@ export async function getAllProducts<T>() {
 
 export async function createProduct(data: ProductCreateInput, ownerId: string) {
   const rawData = {
-    id: "test_id",
     title: data.title,
     price: data.price,
     description: data.description,
-    ownerId: "test_owner_id",
+    ownerId,
   };
   const [newProduct] = await db.insert(productsTable).values(rawData).returning();
 
   if (data.images?.length > 0) {
-    const uploaded = await uploadProductImage(data.images, String(newProduct.id));
+    const uploaded = await uploadProductImage(data.images, ownerId, String(newProduct.id), newProduct.title);
 
     await db.insert(productImages).values(
       uploaded.map(i => ({
