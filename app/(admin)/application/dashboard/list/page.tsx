@@ -1,10 +1,6 @@
 import { auth } from '@clerk/nextjs/server';
-import { NewProductForm } from "@/app/(admin)/_components/newProductForm";
-import { getUserAction } from '@/app/actions/user.actions';
-import {createProductAction} from '@/app/actions/product.actions';
-import { redirect } from 'next/navigation';
-
-import { formSchema } from '@/app/(admin)/_components/newProductForm';
+import { getProductsAction } from '@/app/actions/product.actions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Assuming Shadcn Card components are available
 
 export default async function ListPage() {
 
@@ -14,11 +10,38 @@ export default async function ListPage() {
         redirect("/sign-in");
     };
 
-    async function createNewProduct(formData: typeof formSchema) {
-        "use server";
+    const allProducts = await getProductsAction();
+
+    if (!allProducts.length) {
+        return (
+            <div className="flex items-center justify-center min-h-screen p-4">
+                <Card className="w-full max-w-md">
+                    <CardContent className="p-6 text-center">
+                        No products found
+                    </CardContent>
+                </Card>
+            </div>
+        );
     }
 
     return (
-        <NewProductForm createNewProduct={createNewProduct} />
-    )
+        <div className="min-h-screen bg-gray-50 p-4">
+            <div className="max-w-7xl mx-auto">
+                <h1 className="text-2xl font-bold mb-6 text-center md:text-left">Product List</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {allProducts.map((p) => (
+                        <Card key={p.id} className="shadow-lg">
+                            <CardHeader>
+                                <CardTitle>{p.name}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>{p.description}</p>
+                                <p className="font-semibold">${p.price}</p>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 }

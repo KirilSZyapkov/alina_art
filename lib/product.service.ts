@@ -40,6 +40,15 @@ export async function createProduct(data: ProductCreateInput, ownerId: string) {
 
 }
 
+export async function getProductById(id: string) {
+  return db.query.productsTable.findFirst({
+    where: eq(productsTable.id, id),
+    with: {
+      images: true
+    },
+  })
+}
+
 export async function updateProduct(
   id: string,
   data: Partial<{ title: string; price: string; description: string; imgUrl: string }>

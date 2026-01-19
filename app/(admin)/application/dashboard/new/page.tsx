@@ -1,10 +1,26 @@
-import { NewProductForm } from "../../../_components/newProductForm";
-import { createProductAction } from "@/app/actions/product.actions";
+import { auth } from '@clerk/nextjs/server';
+import { NewProductForm } from "@/app/(admin)/_components/newProductForm";
+import { getUserAction } from '@/app/actions/user.actions';
+import {createProductAction} from '@/app/actions/product.actions';
+import { redirect } from 'next/navigation';
 
-export default function NewProductPage() {
+import { formSchema } from '@/app/(admin)/_components/newProductForm';
+
+export default async function NewProductPage() {
+
+    const { userId } = await auth();
+
+    if (!userId) {
+        redirect("/sign-in");
+    };
+
+  
 
     return (
-        <NewProductForm createNewProduct={() => createProductAction} />
+        <NewProductForm createNewProduct={createNewProduct} />
     )
 }
 
+  async function createNewProduct(formData: typeof formSchema) {
+        "use server";
+    }

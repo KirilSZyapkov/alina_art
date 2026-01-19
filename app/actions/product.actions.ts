@@ -6,7 +6,8 @@ import {
   getAllProducts,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductById
 } from '@/lib/product.service';
 import { revalidatePath } from 'next/cache';
 
@@ -41,6 +42,13 @@ export async function createProductAction(formData: FormData) {
 
   await createProduct(parsed.data, userId);
   revalidatePath('/admin/dashboard/list');
+}
+
+export async function getProductByIdAction(id: string) {
+  // const { userId } = auth();
+  // if (!userId) throw new Error('Unauthorized');
+  const userId = "test";
+  return getProductById(id);
 }
 
 export async function updateProductAction(
