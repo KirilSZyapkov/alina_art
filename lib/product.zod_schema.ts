@@ -10,3 +10,4 @@ export const productCreateSchema = z.object({
 });
 
 export type ProductCreateInput = z.infer<typeof productCreateSchema>
+export const productUpdateSchema = productCreateSchema.partial(); 

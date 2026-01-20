@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Product } from "@/drizzle/schemas/products.schema";
+import { ProductWithImages } from "@/drizzle/schemas/products.schema";
 
 export const formSchema = z.object({
   title: z.string().min(2, { message: "Product name must be at least 5 characters." }),
@@ -29,8 +29,8 @@ export const formSchema = z.object({
 });
 
 type Params = {
-  handleUpdateProduct: (values: z.infer<typeof formSchema>) => void;
-  product: Product
+  handleUpdateProduct: (values: z.infer<typeof formSchema>, productId: string) => void;
+  product: ProductWithImages;
 }
 
 
@@ -105,7 +105,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    handleUpdateProduct(values);
+    handleUpdateProduct(values, product.id);
   }
 
   return (

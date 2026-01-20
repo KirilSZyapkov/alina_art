@@ -15,6 +15,9 @@ export const productsTable = pgTable('products', {
 });
 
 export type Product = typeof productsTable.$inferSelect;
+export type ProductWithImages = InferSelectModel<typeof productsTable> & {
+  images: InferSelectModel<typeof productImages>[];
+}
 
 
 export const productsRelations = relations(productsTable, ({ many }) => ({

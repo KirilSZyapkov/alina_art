@@ -7,7 +7,7 @@ import { ProductCreateInput } from './product.zod_schema';
 import { uploadProductImage } from './image.service';
 
 
-export async function getAllProducts<T>() {
+export async function getAllProducts() {
   return db.query.productsTable.findMany({
     with: {
       images: true
