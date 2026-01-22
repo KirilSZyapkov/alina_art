@@ -1,8 +1,10 @@
 import { auth } from '@clerk/nextjs/server';
 import { getProductsAction } from '@/app/actions/product.actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Assuming Shadcn Card components are available
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'; // Assuming Shadcn Card components are available
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
+import { Pencil } from 'lucide-react';
+import Link from "next/link";
 
 export default async function ListPage() {
 
@@ -45,8 +47,13 @@ export default async function ListPage() {
                             <CardContent>
                                 <CardTitle>{p.title}</CardTitle>
                                 <p>{p.description}</p>
-                                <p className="font-semibold">${p.price}</p>
+                                <p className="font-semibold">€{p.price}</p>
                             </CardContent>
+                            <CardFooter className='flex justify-end gap-5 items-center'>
+                                <Link href={`/application/dashboard/edit/${p.id}`} className='p-1 hover:bg-gray-300 rounded-md'>
+                                    <Pencil className='size-5'/>
+                                </Link>
+                            </CardFooter>
                         </Card>
                     ))}
                 </div>

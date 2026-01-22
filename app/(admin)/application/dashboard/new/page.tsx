@@ -1,10 +1,8 @@
 import { auth } from '@clerk/nextjs/server';
 import { NewProductForm } from "@/app/(admin)/_components/newProductForm";
-import { getUserAction } from '@/app/actions/user.actions';
 import { createProductAction } from '@/app/actions/product.actions';
 import { redirect } from 'next/navigation';
 
-import { formSchema } from '@/app/(admin)/_components/newProductForm';
 import z from 'zod';
 import { productCreateSchema } from '@/lib/product.zod_schema';
 

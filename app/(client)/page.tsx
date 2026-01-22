@@ -18,11 +18,11 @@ export default async function HomePage() {
         {products.map((product) => (
           <Link
             key={product.id}
-            href={`/products/${product.id}`}
+            href={`/product/${product.id}`}
             className="group"
           >
             <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
-              <CardHeader className="p-0">
+              <CardHeader className="p-4">
                 <AspectRatio ratio={1}>
                   <Image
                     src={

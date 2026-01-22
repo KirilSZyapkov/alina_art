@@ -152,7 +152,7 @@ export function NewProductForm({ createNewProduct }: { createNewProduct: (values
                 <FormControl>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400">
-                      $
+                      €
                     </span>
                     <Input
                       placeholder="0.00"
@@ -288,8 +288,8 @@ export function NewProductForm({ createNewProduct }: { createNewProduct: (values
             </Button>
             <Button
               type="reset"
-              variant="outline"
-              className="cursor-pointer flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              variant="destructive"
+              className="cursor-pointer flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg transition-colors"
             >
               Clear
             </Button>
