@@ -25,7 +25,7 @@ export const formSchema = z.object({
   title: z.string().min(2, { message: "Product name must be at least 5 characters." }),
   price: z.string().min(1, { message: "Price must be possitive value and not 0." }),
   description: z.string().min(10, { message: "Description must be at least 10 characters." }),
-  images: z.array(z.string()).min(1, { message: "Please upload at least one image." }),
+  images: z.array(z.instanceof(File)).min(1, { message: "Please upload at least one image." }),
 });
 
 type Params = {
@@ -36,7 +36,7 @@ type Params = {
 
 export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const [previewUrls, setPreviewUrls] = useState<string[]>(
-    product.images ? product.images.map(img => img.url) : []
+    product.images ? product.images.map((img:any) => img.url) : []
   );
   const [isDragging, setIsDragging] = useState(false);
 
@@ -46,7 +46,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
       title: product.title,
       price: product.price,
       description: product.description,
-      images: product.images ? product.images.map(img => img.url) : [],
+      images: product.images ? product.images.map((img:any) => img.url) : [],
     },
   });
 
@@ -54,13 +54,15 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
     const files = e.target.files;
     if (files) {
       const currentImages = form.getValues("images");
+      const newFiles = Array.from(files);
       const newUrls: string[] = [];
-      Array.from(files).forEach(file => {
+
+      newFiles.forEach(file => {
         const reader = new FileReader();
         reader.onloadend = () => {
           newUrls.push(reader.result as string);
-          if (newUrls.length === files.length) {
-            const combined = [...currentImages, ...newUrls];
+          if (newUrls.length === newFiles.length) {
+            const combined = [...currentImages, ...newFiles];
             const combinedUrls = [...previewUrls, ...newUrls];
             setPreviewUrls(combinedUrls);
             form.setValue("images", combined, { shouldValidate: true });
@@ -203,6 +205,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
                 <FormLabel className="text-base font-semibold text-gray-900 dark:text-white">
                   Product Images
                 </FormLabel>
+                <FormMessage />
                 <FormControl>
                   <div className="space-y-4">
                     {/* Upload Area */}
@@ -275,7 +278,6 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
                 <FormDescription className="text-sm text-gray-500 dark:text-gray-400">
                   Upload one or multiple images. You can add, remove, and reorder them.
                 </FormDescription>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -284,14 +286,14 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
           <div className="flex gap-3 pt-4">
             <Button
               type="submit"
-              className="flex-1 h-12 text-base font-semibold bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="flex-1 h-12 text-base font-semibold bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer"
             >
               Update Product
             </Button>
             <Button
               type="reset"
               variant="outline"
-              className="flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
             >
               Reset
             </Button>
