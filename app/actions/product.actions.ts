@@ -36,9 +36,6 @@ export async function createProductAction(formData: z.infer<typeof productCreate
 }
 
 export async function getProductByIdAction(id: string) {
-  // const { userId } = auth();
-  // if (!userId) throw new Error('Unauthorized');
-  const userId = "test";
   return getProductById(id);
 }
 
@@ -46,11 +43,15 @@ export async function updateProductAction(
   id: string,
   data: Partial<{ title: string; price: string; description: string; imgUrl: string }>
 ) {
+  const { userId } = auth();
+  if (!userId) throw new Error("Unauthorized");
   await updateProduct(id, data);
   revalidatePath('/admin/dashboard/list');
 }
 
 export async function deleteProductAction(id: string) {
+  const { userId } = auth();
+  if (!userId) throw new Error("Unauthorized");
   await deleteProduct(id);
   revalidatePath('/admin/dashboard/list');
 }
