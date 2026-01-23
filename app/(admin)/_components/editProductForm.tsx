@@ -21,64 +21,60 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductWithImages } from "@/drizzle/schemas/products.schema";
 
-export const formSchema = z.object({
+export const editProductSchema = z.object({
   title: z.string().min(2, { message: "Product name must be at least 5 characters." }),
   price: z.string().min(1, { message: "Price must be possitive value and not 0." }),
   description: z.string().min(10, { message: "Description must be at least 10 characters." }),
-  images: z.array(z.instanceof(File)).min(1, { message: "Please upload at least one image." }),
+  existingImages: z.array(z.string()).min(1, { message: "Please upload at least one image." }),
+  newImages: z.array(z.instanceof(File)).optional(),
 });
 
 type Params = {
-  handleUpdateProduct: (values: z.infer<typeof formSchema>, productId: string) => void;
+  handleUpdateProduct: (values: z.infer<typeof editProductSchema>, productId: string) => void;
   product: ProductWithImages;
 }
 
 
 export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const [previewUrls, setPreviewUrls] = useState<string[]>(
-    product.images ? product.images.map((img:any) => img.url) : []
+    product.images.map((img:any) => img.url)
   );
   const [isDragging, setIsDragging] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof editProductSchema>>({
+    resolver: zodResolver(editProductSchema),
     defaultValues: {
       title: product.title,
       price: product.price,
       description: product.description,
-      images: product.images ? product.images.map((img:any) => img.url) : [],
+      existingImages: product.images.map((img:any) => img.url),
+      newImages: [],
     },
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const currentImages = form.getValues("images");
-      const newFiles = Array.from(files);
-      const newUrls: string[] = [];
+    const files = Array.from(e.target.files ?? []);
+    const newUrls = files.map(file=> URL.createObjectURL(file));
+    setPreviewUrls(prev=> [...prev, newUrls]);
+    const currentNewImages = form.getValues("newImages") ?? [];
 
-      newFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          newUrls.push(reader.result as string);
-          if (newUrls.length === newFiles.length) {
-            const combined = [...currentImages, ...newFiles];
-            const combinedUrls = [...previewUrls, ...newUrls];
-            setPreviewUrls(combinedUrls);
-            form.setValue("images", combined, { shouldValidate: true });
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+    form.setValue("newImages", [...currentNewImages, ...files]);
   };
 
   const removeImage = (index: number) => {
-    const currentImages = form.getValues("images");
-    const updated = currentImages.filter((_, i) => i !== index);
-    const updatedUrls = previewUrls.filter((_, i) => i !== index);
-    setPreviewUrls(updatedUrls);
-    form.setValue("images", updated, { shouldValidate: true });
+    const existing = form.getValues("existingImages");
+    const newImages = form.getValues("newImages") ?? [];
+    
+    if(index< existing.length){
+      const updateExisting = existing.filter((_,i)=> i !== index);
+      form.setValues("existingImages", updateExisting);
+    } else {
+      const fileINdex = index - existing.length;
+      const updateNew = newImages.filter((_,i)=> i !==fileINdex);
+      form.setValues("newImages", updateNew);
+    };
+
+    setPreviewUrls(prev=> prev.filter((_,i)=> i!==index));
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -105,7 +101,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
     }
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof editProductSchema>) {
     console.log(values);
     handleUpdateProduct(values, product.id);
   }

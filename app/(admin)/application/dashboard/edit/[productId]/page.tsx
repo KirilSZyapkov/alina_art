@@ -3,10 +3,8 @@ import { redirect } from 'next/navigation';
 import { getProductByIdAction, updateProductAction } from '@/app/actions/product.actions';
 import { EditProductForm } from '@/app/(admin)/_components/editProductForm';
 import { formSchema } from '@/app/(admin)/_components/newProductForm';
-import { productUpdateSchema } from '@/lib/product.zod_schema';
+import { editProductSchema } from '../../../../_components/editProductForm';
 import z from 'zod';
-
-type PrpductUpdateSchema = z.infer<typeof productUpdateSchema>;
 
 export default async function EditProductPage({ params }: { params: Promise<{ productId: string }> }) {
     const { userId } = await auth();
@@ -32,7 +30,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ pr
 
 }
 
- async function handleUpdateProduct(formData: PrpductUpdateSchema, productId: string) {
+ async function handleUpdateProduct(formData: z.infer<typeof editProductSchema>, productId: string) {
     "use server";
     const updatedProduct = await updateProductAction(productId, formData)
     };
