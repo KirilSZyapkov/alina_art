@@ -21,6 +21,8 @@ export const productImages = pgTable('product_images', {
   updatedAt: timestamp("updated_at").defaultNow()
 })
 
+export type ProductImage = typeof productImages.$inferSelect
+
 export const productImagesRelations = relations(productImages, ({one})=>({
   product: one(productsTable, {
     fields: [productImages.productId],

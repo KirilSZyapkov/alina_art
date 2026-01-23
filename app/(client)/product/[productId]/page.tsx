@@ -1,4 +1,5 @@
 import { getProductByIdAction } from "@/app/actions/product.actions";
+import ImageView from "@/components/shared/imageView";
 
 export default async function ProductDetailsPage({ params }: { params: Promise<{ productId: string }> }){
     const { productId } = await params;
@@ -7,13 +8,13 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
     const images = product?.images || [];
 
     return(
-        <section>
-            <div>
-                {images.map((image, index)=> <ImageView image={image} index={index} />)}  
-                <div>
+        <section className="border-2 border-red-500">
+            <div className="border-2 border-green-500">
+               <ImageView images={images} />
+                <div className="border-2 border-blue-500">
                     <div>
-                        <h1>{product?.name}</h1>
-                        <span>${product?.price.toFixed(2)}</span>
+                        <h1>{product?.title}</h1>
+                        <span>${Number(product?.price).toFixed(2)}</span>
                         <p>{product?.description}</p>
                     </div>
                 </div>

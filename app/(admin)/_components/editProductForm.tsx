@@ -55,7 +55,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
     const newUrls = files.map(file=> URL.createObjectURL(file));
-    setPreviewUrls(prev=> [...prev, newUrls]);
+    setPreviewUrls(prev=> [...prev, ...newUrls]);
     const currentNewImages = form.getValues("newImages") ?? [];
 
     form.setValue("newImages", [...currentNewImages, ...files]);
@@ -67,11 +67,11 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
     
     if(index< existing.length){
       const updateExisting = existing.filter((_,i)=> i !== index);
-      form.setValues("existingImages", updateExisting);
+      form.setValue("existingImages", updateExisting);
     } else {
       const fileINdex = index - existing.length;
       const updateNew = newImages.filter((_,i)=> i !==fileINdex);
-      form.setValues("newImages", updateNew);
+      form.setValue("newImages", updateNew);
     };
 
     setPreviewUrls(prev=> prev.filter((_,i)=> i!==index));
@@ -195,7 +195,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
           {/* Images */}
           <FormField
             control={form.control}
-            name="images"
+            name="existingImages"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base font-semibold text-gray-900 dark:text-white">
