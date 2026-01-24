@@ -100,10 +100,12 @@ export function NewProductForm({ createNewProduct }: { createNewProduct: (values
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    
     const newProduct = { ...values, ownerId: "test_owner_id" };
 
     await createNewProduct(newProduct);
+    form.reset();
+    setPreviewUrls([]);
   }
 
   return (

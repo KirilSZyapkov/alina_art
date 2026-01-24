@@ -1,14 +1,27 @@
 import { getProductByIdAction } from "@/app/actions/product.actions";
+import { createCommentAction } from "@/app/actions/commet.actions";
 import ImageView from "@/components/shared/imageView";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { NewCommentForm } from "@/components/shared/commentForm";
 
 export default async function ProductDetailsPage({ params }: { params: Promise<{ productId: string }> }) {
     const { productId } = await params;
 
     const product = await getProductByIdAction(productId);
     const images = product?.images || [];
+    const comments = product?.comments || [];
+
+    async function createNewComment(content: string) {
+        "use server";
+        const newRawComment = {
+            content,
+            productId
+        };
+        await createCommentAction(newRawComment);
+    }
+
 
     return (
         <section className="container mx-auto py-10 px-5 flex flex-col gap-10">
@@ -30,14 +43,17 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                 </div>
             </div>
             <Separator />
-            <div>
+            <div className="flex flex-col gap-6 py-5 px-3">
                 {/* Reviews Section */}
-                <h2>Отзиви {0}</h2>
+                <h2 className="text-center text-3xl tracking-wide ">Отзиви {comments.length}</h2>
+                <div>
+                    <NewCommentForm createNewComment={createNewComment} countComments={comments.length} />
+                </div>
                 <div>
                     {/* Reviews will be displayed here */}
                 </div>
             </div>
-            
+
             <div id="order">
                 {/* Make a purchase button */}
                 <p>поръчка</p>

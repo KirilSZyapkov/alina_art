@@ -10,7 +10,7 @@ import { uploadProductImage } from './image.service';
 export async function getAllProducts() {
   return db.query.productsTable.findMany({
     with: {
-      images: true
+      images: true,
     },
   });
 }
@@ -74,7 +74,8 @@ export async function getProductById(id: string) {
   return db.query.productsTable.findFirst({
     where: eq(productsTable.id, id),
     with: {
-      images: true
+      images: true,
+      comments: true
     },
   })
 }

@@ -102,8 +102,8 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
   };
 
   function onSubmit(values: z.infer<typeof editProductSchema>) {
-    console.log(values);
     handleUpdateProduct(values, product.id);
+    form.reset();
   }
 
   return (

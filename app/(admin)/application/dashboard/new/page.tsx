@@ -24,7 +24,6 @@ export default async function NewProductPage() {
 async function createNewProduct(formData:z.infer< typeof productCreateSchema>) {
     "use server";
     
-    console.log("application/dashboard/new/page.tsx -> createNewProduct -> formData", formData);
     const product = await createProductAction(formData);
-    console.log("application/dashboard/new/page.tsx -> createNewProduct -> product", product);
+    redirect(`/application/dashboard/list`);
 }
