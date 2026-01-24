@@ -1,5 +1,22 @@
-export default function AboutUsPage(){
-    return(
-        <h1>About Us Page</h1>
+export default function AboutUsPage() {
+    return (
+        <div className="container mx-auto py-10 px-5">
+            <h1 className="text-4xl font-bold mb-6">За нас</h1>
+            <p className="text-lg text-gray-700 mb-4">
+                Добре дошли на нашия сайт! Ние сме посветени на създаването на уникални ръчно изработени продукти,
+                които отразяват нашата страст и внимание към детайла.
+            </p>
+            <p className="text-lg text-gray-700 mb-4">
+                Всеки един от нашите продукти е изработен с най-съвременните технологии,
+                за да осигури качество и стил, които ще задоволят и най-взискателните клиенти.
+            </p>
+            <p className="text-lg text-gray-700 mb-4">
+                Ние вярваме, че ръчно изработените изделия носят уникален характер и душа,
+                което ги прави идеални за подаръци или за лична употреба.
+            </p>
+            <p className="text-lg text-gray-700">
+                Благодарим ви, че избрахте нас и се надяваме да се насладите на нашите продукти!
+            </p>
+        </div>
     )
 }

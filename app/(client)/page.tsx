@@ -8,7 +8,7 @@ export default async function HomePage() {
   const products = await getAllProducts();
 
   return (
-    <article className="mx-auto max-w-7xl px-4 py-8">
+    <article className="mx-auto max-w-7xl px-4 h-screen">
       <h1 className="mb-8 text-3xl font-bold tracking-tight text-center">
         Ръчно изработени подаръци
       </h1>

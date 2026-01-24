@@ -1,3 +1,4 @@
+import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import StickySocialBar from "@/components/shared/stickySocialBar";
 
@@ -7,10 +8,11 @@ export default function ClientLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section>
-      <Header/>
-      <StickySocialBar/>
-        {children}
+    <section className="border-2 border-red-500">
+      <Header />
+      <StickySocialBar />
+      {children}
+      <Footer />
     </section>
   );
 }
