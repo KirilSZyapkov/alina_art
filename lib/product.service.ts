@@ -40,6 +40,36 @@ export async function createProduct(data: ProductCreateInput, ownerId: string) {
 
 }
 
+export async function updateProduct(
+  id: string,
+  data: Partial<ProductCreateInput>
+) {
+  console.log("/lib/product.service.ts 47", data);
+  const updatedRawData = {
+    title: data.title,
+    price: data.price,
+    description: data.description,
+    ownerId: data.ownerId
+  };
+
+  const [updatedProduct] = await db.update(productsTable).set(updatedRawData).where(eq(productsTable.id, id)).returning();
+
+  if (data?.images!.length > 0) {
+
+    const uploaded = await uploadProductImage(data.images!, updatedProduct.ownerId, String(updatedProduct.id), updatedProduct.title);
+
+    await db.insert(productImages).values(
+      uploaded.map(i => ({
+        productId: updatedProduct.id,
+        url: i.url,
+        order: i.order
+      }))
+    )
+  };
+
+  return updatedProduct;
+}
+
 export async function getProductById(id: string) {
   return db.query.productsTable.findFirst({
     where: eq(productsTable.id, id),
@@ -47,13 +77,6 @@ export async function getProductById(id: string) {
       images: true
     },
   })
-}
-
-export async function updateProduct(
-  id: string,
-  data: Partial<{ title: string; price: string; description: string; imgUrl: string }>
-) {
-  return db.update(productsTable).set(data).where(eq(productsTable.id, id));
 }
 
 export async function deleteProduct(id: string) {

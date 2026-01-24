@@ -32,5 +32,11 @@ export default async function EditProductPage({ params }: { params: Promise<{ pr
 
  async function handleUpdateProduct(formData: z.infer<typeof editProductSchema>, productId: string) {
     "use server";
-    const updatedProduct = await updateProductAction(productId, formData)
+    const updatedProductData = {
+        title: formData.title,
+        price: formData.price,
+        description: formData.description,
+        images: formData.newImages
+    }
+    const updatedProduct = await updateProductAction(productId, updatedProductData)
     };
