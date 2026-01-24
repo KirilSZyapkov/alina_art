@@ -46,7 +46,7 @@ export default async function HomePage() {
 
               <CardFooter className="p-3 pt-0">
                 <span className="text-sm font-semibold">
-                  {product.price} EUR
+                  {product.price} €
                 </span>
               </CardFooter>
             </Card>

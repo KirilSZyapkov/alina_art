@@ -152,7 +152,7 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
                 <FormControl>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400">
-                      $
+                      €
                     </span>
                     <Input
                       placeholder="0.00"
