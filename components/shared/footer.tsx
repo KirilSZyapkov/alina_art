@@ -13,12 +13,12 @@ export default function Footer(){
           <p className="text-sm text-center mb-4 hover:underline">
             Плащане и доставка
           </p>
-        </Link>
-        <Link href="/return-policy">
+        </Link>       
+        <Link href="/contacts">
           <p className="text-sm text-center mb-4 hover:underline">
-            Връщане на продукти
+            Контакти
           </p>
-        </Link>
+        </Link>  
       </div>
       <div className="container mx-auto text-center">
         <p className="text-sm">

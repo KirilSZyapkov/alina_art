@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <article className="mx-auto max-w-7xl px-4 h-screen">
-      <h1 className="mb-8 text-3xl font-bold tracking-tight text-center">
+      <h1 className="mb-8 mt-8 text-3xl font-bold tracking-tight text-center">
         Ръчно изработени подаръци
       </h1>
 

@@ -8,7 +8,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="border-2 border-red-500">
+    <section>
       <Header />
       <StickySocialBar />
       {children}

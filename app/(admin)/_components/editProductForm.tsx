@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +38,7 @@ type Params = {
 
 export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const [previewUrls, setPreviewUrls] = useState<string[]>(
-    product.images.map((img:any) => img.url)
+    product.images.map((img: any) => img.url)
   );
   const [isDragging, setIsDragging] = useState(false);
 
@@ -47,15 +48,15 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
       title: product.title,
       price: product.price,
       description: product.description,
-      existingImages: product.images.map((img:any) => img.url),
+      existingImages: product.images.map((img: any) => img.url),
       newImages: [],
     },
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    const newUrls = files.map(file=> URL.createObjectURL(file));
-    setPreviewUrls(prev=> [...prev, ...newUrls]);
+    const newUrls = files.map(file => URL.createObjectURL(file));
+    setPreviewUrls(prev => [...prev, ...newUrls]);
     const currentNewImages = form.getValues("newImages") ?? [];
 
     form.setValue("newImages", [...currentNewImages, ...files]);
@@ -64,17 +65,17 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const removeImage = (index: number) => {
     const existing = form.getValues("existingImages");
     const newImages = form.getValues("newImages") ?? [];
-    
-    if(index< existing.length){
-      const updateExisting = existing.filter((_,i)=> i !== index);
+
+    if (index < existing.length) {
+      const updateExisting = existing.filter((_, i) => i !== index);
       form.setValue("existingImages", updateExisting);
     } else {
       const fileINdex = index - existing.length;
-      const updateNew = newImages.filter((_,i)=> i !==fileINdex);
+      const updateNew = newImages.filter((_, i) => i !== fileINdex);
       form.setValue("newImages", updateNew);
     };
 
-    setPreviewUrls(prev=> prev.filter((_,i)=> i!==index));
+    setPreviewUrls(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -287,11 +288,12 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
               Update Product
             </Button>
             <Button
+              asChild
               type="reset"
               variant="outline"
               className="flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
             >
-              Reset
+              <Link href="/application/dashboard/list">Cancel</Link>
             </Button>
           </div>
         </form>

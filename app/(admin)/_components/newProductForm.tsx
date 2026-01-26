@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -289,11 +290,12 @@ export function NewProductForm({ createNewProduct }: { createNewProduct: (values
               Create Product
             </Button>
             <Button
+            asChild
               type="reset"
-              variant="destructive"
+              variant="outline"
               className="cursor-pointer flex-1 h-12 text-base font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-lg transition-colors"
             >
-              Clear
+              <Link href="/application/dashboard/list">Cancel</Link>
             </Button>
           </div>
         </form>

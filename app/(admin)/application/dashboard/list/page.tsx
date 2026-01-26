@@ -46,7 +46,6 @@ export default async function ListPage() {
                             </CardHeader>
                             <CardContent>
                                 <CardTitle>{p.title}</CardTitle>
-                                <p>{p.description}</p>
                                 <p className="font-semibold">€{p.price}</p>
                             </CardContent>
                             <CardFooter className='flex justify-end gap-5 items-center'>

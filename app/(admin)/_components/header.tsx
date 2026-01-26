@@ -13,7 +13,7 @@ export default function AdminHeader() {
   return (
     <nav className="w-full border-b border-gray-200 bg-white/80 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="text-2xl font-bold text-gray-800">Alina Art </Link>
+        <Link href="/application/dashboard" className="text-2xl font-bold text-gray-800">Alina Art </Link>
         <div className="hidden items-center gap-6 sm:flex">
           <SignedIn>
             <Link href="/application/dashboard/list" className="text-gray-700 hover:text-gray-400 transition-colors flex items-center gap-2">
