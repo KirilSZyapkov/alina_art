@@ -38,8 +38,9 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                     <div className="flex flex-col justify-center bg-white rounded-2xl shadow-sm p-6 sm:p-8">
                         <div className="flex flex-col gap-6">
                             <div>
-                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-2">
+                                <h1 className="flex flex-col text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-2">
                                     {product?.title}
+                                    <span className="text-sm font-normal text-gray-500">{product?.ukp}</span>
                                 </h1>
                                 <div className="flex items-baseline gap-2">
                                     <span className="text-2xl sm:text-3xl font-bold text-blue-600">
@@ -113,7 +114,7 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                     <p className="text-gray-600 text-base sm:text-lg mb-6">
                         Попълнете формата по-долу, за да направите вашата поръчка
                     </p>
-                    <OrderForm />
+                    <OrderForm ukp={product?.ukp} />
                 </div>
             </div>
         </section>

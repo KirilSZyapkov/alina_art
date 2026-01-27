@@ -21,7 +21,7 @@ export const formSchema = z.object({
   message: z.string().min(10, { message: "Съобщението трябва да е поне 10 символа." }),
 })
 
-export default function OrderForm() {
+export default function OrderForm({ ukp }: { ukp?: string }) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

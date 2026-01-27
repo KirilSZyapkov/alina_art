@@ -8,6 +8,7 @@ export const productsTable = pgTable('products', {
   id: uuid("id").defaultRandom().primaryKey(),
   title: text('title').notNull(),
   price: text("price").notNull(),
+  ukp: uuid("upk").defaultRandom().length(7).unique(),
   description: text('description').notNull(),
   ownerId: text('owner_id').notNull(),
   createdAt: timestamp("created_at").defaultNow(),
