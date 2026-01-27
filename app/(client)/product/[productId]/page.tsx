@@ -3,9 +3,8 @@ import { createCommentAction } from "@/app/actions/commet.actions";
 import ImageView from "@/components/shared/imageView";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import { NewCommentForm } from "@/components/shared/commentForm";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import OrderForm from "@/components/shared/orderForm";
 
 export default async function ProductDetailsPage({ params }: { params: Promise<{ productId: string }> }) {
@@ -25,7 +24,7 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
     }
 
     return (
-        <section className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        <section className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100">
             {/* Product Details Section */}
             <div className="container mx-auto py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
@@ -40,7 +39,6 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                             <div>
                                 <h1 className="flex flex-col text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-2">
                                     {product?.title}
-                                    <span className="text-sm font-normal text-gray-500">{product?.ukp}</span>
                                 </h1>
                                 <div className="flex items-baseline gap-2">
                                     <span className="text-2xl sm:text-3xl font-bold text-blue-600">
@@ -58,9 +56,9 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                             asChild
                             className="mt-8 sm:mt-10 w-full sm:w-auto px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
                         >
-                            <Link href="#order">
+                            <a href="#order">
                                 Поръчай сега
-                            </Link>
+                            </a>
                         </Button>
                     </div>
                 </div>
@@ -107,14 +105,14 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
                 <Separator className="my-8 sm:my-12" />
 
                 {/* Order Section */}
-                <div id="order" className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 sm:p-12 text-center">
+                <div id="order" className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 sm:p-12 text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
                         Готови ли сте да поръчате?
                     </h2>
                     <p className="text-gray-600 text-base sm:text-lg mb-6">
                         Попълнете формата по-долу, за да направите вашата поръчка
                     </p>
-                    <OrderForm ukp={product?.ukp} />
+                    <OrderForm id={product?.id} />
                 </div>
             </div>
         </section>

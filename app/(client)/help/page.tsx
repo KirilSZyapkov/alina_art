@@ -106,7 +106,7 @@ export default function HelpPage() {
                     <h2 className="text-3xl font-bold mb-4">Свържете се с нас</h2>
                     <p className="mb-6 opacity-90">Имате въпроси? Ние сме тук, за да помогнем!</p>
                     <div className="space-y-3 text-sm sm:text-base">
-                        <p><span className="font-semibold">📧 Email:</span> info@alinaart.bg</p>                        
+                        <p><span className="font-semibold">📧 Email:</span> alinaartgifts4you@gmail.com</p>
                     </div>
                 </section>
 

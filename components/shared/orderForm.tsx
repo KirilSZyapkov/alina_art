@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "../ui/input";
+import emailjs from '@emailjs/browser';
+import {useState} from "react";
 
 export const formSchema = z.object({
   senderName: z.string().min(3, { message: "Моля попълнете името си." }),
@@ -21,7 +23,8 @@ export const formSchema = z.object({
   message: z.string().min(10, { message: "Съобщението трябва да е поне 10 символа." }),
 })
 
-export default function OrderForm({ ukp }: { ukp?: string }) {
+export default function OrderForm({ id }: { id?: string }) {
+  const [isSending, setIsSending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,9 +36,28 @@ export default function OrderForm({ ukp }: { ukp?: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSending(true);
+    const message = {
+      title: id,
+      name: values.senderName,
+      email: values.senderEmail,
+      message: values.message
+    };
 
+    try {
+    const res = await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, message, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
+
+    if(res.status === 200){
+      alert("Message sent successfully!");
+      form.reset();
+      setIsSending(false);
+    }
+    } catch (e: unknown) {
+      console.error(e);
+      setIsSending(false);
+      throw new Error("Failed to send message. Please try again later.");
+    }
   
-    form.reset();
   }
 
   return (
@@ -103,11 +125,12 @@ export default function OrderForm({ ukp }: { ukp?: string }) {
         {/* Submit Button */}
         <div className="flex gap-3 pt-4 justify-end w-full">
           <Button
+            disabled={isSending}
             type="submit"
             variant="secondary"
             className="mt-8 sm:mt-10 w-full sm:w-auto px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold bg-blue-600 hover:bg-blue-400 rounded-lg transition-colors duration-200 cursor-pointer"
           >
-            Направе вашата поръчка
+            {isSending? "Съобщението се изпраща..." : "Направе вашата поръчка"}
           </Button>
 
         </div>
