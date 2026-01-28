@@ -130,11 +130,12 @@ export default function ContactsPage() {
               {/* Submit Button */}
               <div className="flex gap-3 pt-4 justify-end w-full">
                 <Button
+                  disabled={isSending}
                   type="submit"
                   variant="secondary"
                   className="mt-8 sm:mt-10 w-full sm:w-auto px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold bg-blue-600 hover:bg-blue-400 rounded-lg transition-colors duration-200 cursor-pointer"
                 >
-                  Изпрати съобщение
+                  {isSending ? "Изпращане..." : "Изпрати съобщение"}
                 </Button>
 
               </div>
