@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "../../../components/ui/input";
+import emailjs from '@emailjs/browser';
+import {useState} from "react";
 
 export const formSchema = z.object({
   senderName: z.string().min(3, { message: "Моля попълнете името си." }),
@@ -22,6 +24,7 @@ export const formSchema = z.object({
 })
 
 export default function ContactsPage() {
+  const [isSending, setIsSending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,9 +36,27 @@ export default function ContactsPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSending(true);
+    const message = {
+      title: "Информация от контактна форма",
+      name: values.senderName,
+      email: values.senderEmail,
+      message: values.message
+    };
 
+    try {
+    const res = await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, message, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
 
-    form.reset();
+    if(res.status === 200){
+      alert("Message sent successfully!");
+      form.reset();
+      setIsSending(false);
+    }
+    } catch (e: unknown) {
+      console.error(e);
+      setIsSending(false);
+      throw new Error("Failed to send message. Please try again later.");
+    }
   }
 
   return (
