@@ -1,6 +1,6 @@
 export default function AboutUsPage() {
     return (
-        <div className="container mx-auto py-10 px-5 h-screen">
+        <div className="container mx-auto max-w-4xl py-10 px-5 h-screen">
             <h1 className="text-4xl font-bold mb-6">За нас</h1>
             <p className="text-lg text-gray-700 mb-4">
                 Добре дошли на нашия сайт! Ние сме посветени на създаването на уникални ръчно изработени продукти,

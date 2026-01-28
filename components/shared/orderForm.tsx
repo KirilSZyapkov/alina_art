@@ -38,7 +38,7 @@ export default function OrderForm({ id }: { id?: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSending(true);
     const message = {
-      title: id,
+      title: `Артикул N:${id}`,
       name: values.senderName,
       email: values.senderEmail,
       message: values.message

@@ -1,7 +1,7 @@
 export default function PaymentAndDeliveryPage() {
     return (
-        <div className="container mx-auto py-10 px-5 min-h-screen">
-            <h1 className="text-4xl font-bold mb-6">Плащане и доставка</h1>
+        <div className="container mx-auto max-w-4xl py-10 px-5 min-h-screen">
+            <h1 className="text-4xl font-bold mb-6 text-center">Плащане и доставка</h1>
             <h2 className="text-2xl font-semibold mb-4">Методи на плащане</h2>
             <p className="text-lg text-gray-700 mb-6">
                 При нас можете да изберете между няколко удобни метода на плащане:

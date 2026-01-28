@@ -2,7 +2,7 @@ export default function GeneralTermsAndConditionsPage() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
             <section className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">
                     Общи условия
                 </h1>
 
