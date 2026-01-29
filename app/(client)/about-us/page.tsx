@@ -1,7 +1,7 @@
 export default function AboutUsPage() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
-            <div className="container mx-auto max-w-4xl py-10 px-5 h-screen bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <div className="container mx-auto max-w-4xl py-10 px-5 bg-white dark:bg-gray-800 rounded-lg shadow-md">
                 <h1 className="text-4xl font-bold mb-6">За нас</h1>
                 <p className="text-lg text-gray-700 mb-4">
                     Добре дошли на нашия сайт! Ние сме посветени на създаването на уникални ръчно изработени продукти,

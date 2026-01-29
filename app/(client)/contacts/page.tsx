@@ -61,11 +61,11 @@ export default function ContactsPage() {
 
   return (
     <div className="container m-auto min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
-      <div className="flex flex-col bg-white m-auto items-center max-w-280 rounded-xl shadow-md">
+      <div className="flex flex-col bg-white m-auto items-center max-w-280 rounded-xl shadow-md py-3 px-10">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white m-10">
           Свържете се с нас
         </h2>
-        <div className="w-full">
+        <div className="w-full py-5">
           <h3 className="text-xl md:text-2xl font-bold text-gray-500 dark:text-white m-9">Форма за контакт</h3>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">

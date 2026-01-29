@@ -35,7 +35,7 @@ export default async function ProductDetailsPage({params}: { params: Promise<{ p
 
           {/* Product Info Section */}
           <div className="flex flex-col justify-center bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 overflow-auto">
               <div>
                 <h1
                   className="flex flex-col text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-2">
@@ -82,7 +82,7 @@ export default async function ProductDetailsPage({params}: { params: Promise<{ p
           </div>
 
           {/* Comments List */}
-          <div className="space-y-4">
+          <div className="space-y-4 max-h-[1150px] overflow-y-auto">
             {comments.length === 0 ? (
               <div className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 text-center">
                 <p className="text-gray-500 text-base sm:text-lg">
