@@ -60,8 +60,8 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="container h-screen m-auto">
-      <div className="flex flex-col m-auto items-center max-w-280">
+    <div className="container m-auto min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
+      <div className="flex flex-col bg-white m-auto items-center max-w-280 rounded-xl shadow-md">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white m-10">
           Свържете се с нас
         </h2>
