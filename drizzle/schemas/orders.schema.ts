@@ -1,14 +1,11 @@
-// drizzle/schema/orders.schema.ts
 import {
   pgTable,
   uuid,
   text,
-  timestamp,
+  timestamp
 } from "drizzle-orm/pg-core";
-import {orderStatusEnum} from "./order-status.enum";
 import {productsTable} from "./products.schema";
 import {relations} from "drizzle-orm";
-import {commentsTable} from "@/drizzle/schemas/comments.schema";
 
 export const ordersTable = pgTable("orders", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -17,7 +14,7 @@ export const ordersTable = pgTable("orders", {
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   price: text("price").notNull(),
-  status: orderStatusEnum("status").default("new").notNull(),
+  order_status: text("order_status").default("new").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
