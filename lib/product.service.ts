@@ -1,4 +1,4 @@
-// lib/product.service.ts
+
 import db from '@/drizzle/db';
 import { productsTable } from '@/drizzle/schemas/products.schema';
 import { productImages } from '@/drizzle/schemas/product-images.schema';

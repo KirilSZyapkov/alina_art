@@ -1,0 +1,34 @@
+"use server";
+
+import {auth} from "@clerk/nextjs/server";
+import {OrderCreateInput} from "@/lib/order.zod_schema";
+import {revalidatePath} from "next/cache";
+import {
+  createNewOrder,
+  getOrderById,
+  getAllOrders
+} from '@/lib/order.service';
+
+export async function createNewOrderAction(data: OrderCreateInput){
+  await createNewOrder(data);
+  revalidatePath('/admin/dashboard/');
+}
+
+export async function getOrderByIdAction(id:string){
+  const {userId} = await auth();
+
+  if (!userId) throw new Error('Unauthorized');
+
+  const order = await getOrderById(id);
+
+  return order;
+}
+
+export async function getAllOrdersAction(adminId:string){
+  const {userId} = await auth();
+  if (!userId) throw new Error('Unauthorized');
+
+  const allOrders = await getAllOrders(adminId);
+
+  return allOrders;
+}

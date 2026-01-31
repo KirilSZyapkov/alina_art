@@ -11,6 +11,7 @@ export const ordersTable = pgTable("orders", {
   id: uuid("id").defaultRandom().primaryKey(),
   productId: uuid("product_id").notNull()
     .references(() => productsTable.id, {onDelete: "cascade"}),
+  adminId: text("admin_id").notNull(),
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   price: text("price").notNull(),

@@ -1,6 +1,6 @@
-// lib/product.schema.ts
+
 import { z } from 'zod';
-// todo: да добавя създаден–на и обновен–на в продукта
+
 export const productCreateSchema = z.object({
   ownerId: z.string().min(1),
   title: z.string().min(3, 'Title is required!'),
