@@ -3,6 +3,7 @@ import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { InferSelectModel, relations } from 'drizzle-orm';
 import { productImages } from './product-images.schema';
 import { commentsTable } from './comments.schema';
+import {ordersTable} from "@/drizzle/schemas/orders.schema";
 
 export const productsTable = pgTable('products', {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -22,5 +23,6 @@ export type ProductWithImages = InferSelectModel<typeof productsTable> & {
 
 export const productsRelations = relations(productsTable, ({ many }) => ({
   images: many(productImages),
-  comments: many(commentsTable)
+  comments: many(commentsTable),
+  orders: many(ordersTable)
 }))
