@@ -82,7 +82,7 @@ export default async function ProductDetailsPage({params}: { params: Promise<{ p
           </div>
 
           {/* Comments List */}
-          <div className="space-y-4 max-h-[1150px] overflow-y-auto">
+          <div className="space-y-4 max-h-287.5 overflow-y-auto">
             {comments.length === 0 ? (
               <div className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 text-center">
                 <p className="text-gray-500 text-base sm:text-lg">

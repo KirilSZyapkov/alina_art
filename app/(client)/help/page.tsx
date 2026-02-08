@@ -13,7 +13,7 @@ export default function HelpPage() {
         },
         {
             question: "Как да поръчам произведение?",
-            answer: "Изберете желаното произведение, Попълнете формата за поръчка и ние ще се свържем с вас."
+            answer: "Изберете желаното произведение, попълнете формата за поръчка и ние ще се свържем с вас."
         },
         {
             question: "Какво е времето на доставка?",
@@ -30,7 +30,7 @@ export default function HelpPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100">
             {/* Header */}
             <div className="bg-white shadow-sm border-b border-slate-200">
                 <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -69,7 +69,7 @@ export default function HelpPage() {
                                     <span className="font-semibold text-slate-900 text-left">{faq.question}</span>
                                     <ChevronDown
                                         size={20}
-                                        className={`text-slate-600 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''
+                                        className={`text-slate-600 shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''
                                             }`}
                                     />
                                 </button>
@@ -102,7 +102,7 @@ export default function HelpPage() {
                 </section>
 
                 {/* Contact Section */}
-                <section id="contact" className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-lg p-8 text-white">
+                <section id="contact" className="bg-linear-to-r from-purple-600 to-blue-600 rounded-lg shadow-lg p-8 text-white">
                     <h2 className="text-3xl font-bold mb-4">Свържете се с нас</h2>
                     <p className="mb-6 opacity-90">Имате въпроси? Ние сме тук, за да помогнем!</p>
                     <div className="space-y-3 text-sm sm:text-base">

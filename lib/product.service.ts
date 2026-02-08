@@ -44,7 +44,7 @@ export async function updateProduct(
   id: string,
   data: Partial<ProductCreateInput>
 ) {
-  console.log("/lib/product.service.ts 47", data);
+ 
   const updatedRawData = {
     title: data.title,
     price: data.price,

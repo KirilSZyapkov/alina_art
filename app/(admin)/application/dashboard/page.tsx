@@ -1,5 +1,6 @@
 import {getProductsAction} from "@/app/actions/product.actions";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
+import LineChartComponent from "../../_components/lineChart";
 
 const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -52,7 +53,9 @@ export default async function DashboardPage() {
         </Card>
       </div>
       {/* Revenue Line Chart */}
-      <div>общ брой поръчки</div>
+      <div>
+        <LineChartComponent/>
+      </div>
 
       {/* Bar Chart - Top Products / Pie - Order Status */}
       <div>графика месечна таргет продажби</div>

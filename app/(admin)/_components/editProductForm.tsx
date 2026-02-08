@@ -31,7 +31,7 @@ export const editProductSchema = z.object({
 });
 
 type Params = {
-  handleUpdateProduct: (values: z.infer<typeof editProductSchema>, productId: string) => void;
+  handleUpdateProduct: (values: z.infer<typeof editProductSchema>, productId: string) => Promise<void>;
   product: ProductWithImages;
 }
 
@@ -40,7 +40,8 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
   const [previewUrls, setPreviewUrls] = useState<string[]>(
     product.images.map((img: any) => img.url)
   );
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof editProductSchema>>({
     resolver: zodResolver(editProductSchema),
@@ -102,9 +103,14 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
     }
   };
 
-  function onSubmit(values: z.infer<typeof editProductSchema>) {
-    handleUpdateProduct(values, product.id);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof editProductSchema>) {
+    setIsUpdating(true);
+    try {
+      await handleUpdateProduct(values, product.id);
+      form.reset();
+    } finally {
+      setIsUpdating(false);
+    }
   }
 
   return (
@@ -284,8 +290,9 @@ export function EditProductForm({ handleUpdateProduct, product }: Params) {
             <Button
               type="submit"
               className="flex-1 h-12 text-base font-semibold bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer"
+              disabled={isUpdating}
             >
-              Update Product
+              {isUpdating ? "Updating..." : "Update Product"}
             </Button>
             <Button
               asChild

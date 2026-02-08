@@ -38,5 +38,7 @@ async function handleUpdateProduct(formData: z.infer<typeof editProductSchema>, 
         description: formData.description,
         images: formData.newImages
     }
-    const updatedProduct = await updateProductAction(productId, updatedProductData)
+    await updateProductAction(productId, updatedProductData);
+    redirect("/application/dashboard/list");
+
 };
