@@ -15,7 +15,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "../ui/input";
 import emailjs from '@emailjs/browser';
-import {useState} from "react";
+import { useState } from "react";
+import { createNewOrderAction } from "@/app/actions/order.actions";
 
 export const formSchema = z.object({
   senderName: z.string().min(3, { message: "Моля попълнете името си." }),
@@ -23,41 +24,57 @@ export const formSchema = z.object({
   message: z.string().min(10, { message: "Съобщението трябва да е поне 10 символа." }),
 })
 
-export default function OrderForm({ id }: { id?: string }) {
+export default function OrderForm({ productId, ownerId, price }: { productId?: string, ownerId?: string, price: string }) {
   const [isSending, setIsSending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       senderName: "",
-      senderEmail:"",
-      message:""
+      senderEmail: "",
+      message: ""
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!productId || !ownerId || Number(price) === 0) {
+      throw new Error("Поради технически проблем, този продукт не е наличен! Извиняваме се за създалото се неудобство! Моля да се свържете с нас чрез контакната форм!");
+    };
+
     setIsSending(true);
     const message = {
-      title: `Артикул N:${id}`,
+      title: `Артикул N:${productId}`,
       name: values.senderName,
       email: values.senderEmail,
       message: values.message
     };
+    const rawData = {
+      productId,
+      adminId: ownerId,
+      customerName: values.senderName,
+      customerEmail: values.senderEmail,
+      price,
+      order_status: "new"
+    };
 
     try {
-    const res = await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, message, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
+      const res = await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, message, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
 
-    if(res.status === 200){
-      alert("Message sent successfully!");
-      form.reset();
-      setIsSending(false);
-    }
+      if (res.status === 200) {
+        const newCreatedOrder = await createNewOrderAction(rawData);
+        if(!newCreatedOrder){
+          throw new Error("Нещо се обурка! Моля опитайте отново!");
+        };
+        alert("Message sent successfully!");
+        form.reset();
+        setIsSending(false);
+      }
     } catch (e: unknown) {
       console.error(e);
       setIsSending(false);
       throw new Error("Failed to send message. Please try again later.");
     }
-  
+
   }
 
   return (
@@ -84,13 +101,13 @@ export default function OrderForm({ id }: { id?: string }) {
             </FormItem>
           )}
         />
-         <FormField
+        <FormField
           control={form.control}
           name="senderEmail"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-semibold text-gray-900 dark:text-white">
-               Вашия имейл адрес
+                Вашия имейл адрес
               </FormLabel>
               <FormControl>
                 <Input
@@ -103,7 +120,7 @@ export default function OrderForm({ id }: { id?: string }) {
             </FormItem>
           )}
         />
-         <FormField
+        <FormField
           control={form.control}
           name="message"
           render={({ field }) => (
@@ -130,7 +147,7 @@ export default function OrderForm({ id }: { id?: string }) {
             variant="secondary"
             className="mt-8 sm:mt-10 w-full sm:w-auto px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold bg-blue-600 hover:bg-blue-400 rounded-lg transition-colors duration-200 cursor-pointer"
           >
-            {isSending? "Съобщението се изпраща..." : "Направе вашата поръчка"}
+            {isSending ? "Съобщението се изпраща..." : "Направе вашата поръчка"}
           </Button>
 
         </div>

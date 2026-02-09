@@ -7,7 +7,7 @@ export const orderCreateSchema = z.object({
   customerName: z.string().min(1, "Provide customer name"),
   customerEmail: z.string().min(1, "Provide customer email."),
   price: z.string().min(1, "Price is required!"),
-  order_status: z.string().optional(),
+  order_status: z.string().default("new"),
 });
 
 export type OrderCreateInput = z.infer<typeof orderCreateSchema>;

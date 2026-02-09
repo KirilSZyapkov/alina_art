@@ -14,6 +14,10 @@ export default async function ProductDetailsPage({params}: { params: Promise<{ p
   const images = product?.images || [];
   const comments = product?.comments || [];
 
+  if(!product){
+    throw new Error("Възникна проблем! Моля опитайте по-късно!");
+  };
+
   async function createNewComment(content: string) {
     "use server";
     const newRawComment = {
@@ -114,7 +118,7 @@ export default async function ProductDetailsPage({params}: { params: Promise<{ p
           <p className="text-gray-600 text-base sm:text-lg mb-6">
             Попълнете формата по-долу, за да направите вашата поръчка
           </p>
-          <OrderForm id={product?.id}/>
+          <OrderForm price={product?.price} productId={product?.id} ownerId={product?.ownerId}/>
         </div>
       </div>
     </section>

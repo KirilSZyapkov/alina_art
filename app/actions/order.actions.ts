@@ -10,8 +10,9 @@ import {
 } from '@/lib/order.service';
 
 export async function createNewOrderAction(data: OrderCreateInput){
-  await createNewOrder(data);
+  const newCreatedOrder = await createNewOrder(data);
   revalidatePath('/admin/dashboard/');
+  return newCreatedOrder;
 }
 
 export async function getOrderByIdAction(id:string){

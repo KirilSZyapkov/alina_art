@@ -10,7 +10,6 @@ export default function GlobalError({ error }: { error: Error }) {
         <h1 className="text-2xl font-bold">Нещо се обърка</h1>
         <p className="mt-2 text-muted-foreground">{error.message}</p>
         <p className="mt-2 text-muted-foreground">
-          Моля, рефрешнете страницата.
           <Button asChild className="ml-2" variant="secondary">
             <Link href="/">Начало</Link>
           </Button>

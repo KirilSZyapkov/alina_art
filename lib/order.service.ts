@@ -18,8 +18,24 @@ export async function createNewOrder(data: OrderCreateInput) {
   return newOrder;
 }
 
-export async function getOrderById() {
+export async function getOrderById(id:string) {
+  if(!id){
+    throw new Error("Product id is required!");
+  };
+
+  const order = await db.query.ordersTable.findFirst({
+    where: eq(ordersTable.id, id),
+  });
+
+  return order;
+
 }
 
-export async function getAllOrders() {
+export async function getAllOrders(adminId: string) {
+
+  const ordersList = await db.query.ordersTable.findMany({
+    where: eq(ordersTable.adminId, adminId),
+  });
+
+  return ordersList;
 }
