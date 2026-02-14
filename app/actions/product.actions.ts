@@ -14,7 +14,9 @@ import z from 'zod';
 
 
 export async function getProductsAction() {
-  return getAllProducts();
+  const {userId} = await auth();
+  if (!userId) throw new Error('Unauthorized');
+  return getAllProducts(userId);
 }
 
 export async function createProductAction(formData: z.infer<typeof productCreateSchema>) {

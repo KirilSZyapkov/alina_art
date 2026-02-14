@@ -1,12 +1,17 @@
 import {getProductsAction} from "@/app/actions/product.actions";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
+import { getRevenuePerMonthAction, getOrdersPerMonthAction } from "@/app/actions/order.actions";
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import LineChartComponent from "../../_components/lineChart";
 
-const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 export default async function DashboardPage() {
-
+  
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const currentMonth = month[new Date().getMonth()];
+  const numProducts = await getProductsAction();
+  const revenuePerMonth = await getRevenuePerMonthAction();
+  const ordersPerMonth = await getOrdersPerMonthAction();
+
   return (
     <section className="container m-auto flex flex-col gap-4 py-5 px-5 sm:px-2">
       {/* KPI Cards */}
@@ -17,9 +22,9 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             {/* Fetch and display total products */}
-            <div className="text-xl font-bold text-gray-500">
+            <div className="flex items-center justify-center w-full text-5xl font-bold text-gray-500">
               {/* Placeholder for total products count */}
-              120
+              {numProducts.length}
             </div>
           </CardContent>
         </Card>
@@ -54,7 +59,7 @@ export default async function DashboardPage() {
       </div>
       {/* Revenue Line Chart */}
       <div>
-        <LineChartComponent/>
+        <LineChartComponent month={month} revenuePerMonth={revenuePerMonth} ordersPerMonth={ordersPerMonth}/>
       </div>
 
       {/* Bar Chart - Top Products / Pie - Order Status */}

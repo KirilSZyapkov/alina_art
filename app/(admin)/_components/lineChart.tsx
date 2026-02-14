@@ -9,7 +9,7 @@ const data = [
     name: 'Page A',
     uv: 4000,
     pv: 2400,
-    amt: 2400,
+    amt: 400,
   },
   {
     name: 'Page B',
@@ -50,7 +50,20 @@ const data = [
 ];
 // #endregion
 
-export default function LineChartComponent() {
+type Props = {
+  month: string[];
+  revenuePerMonth: {
+    month: string;
+    revenue: number;
+  }[];
+  ordersPerMonth:{
+    month: string;
+    count: number;
+  }[]
+}
+
+export default function LineChartComponent({ month, revenuePerMonth, ordersPerMonth }: Props) {
+  console.log(ordersPerMonth);
   return (
     <LineChart
       style={{ width: '100%', maxWidth: '700px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618 }}

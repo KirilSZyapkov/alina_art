@@ -41,11 +41,16 @@ export async function getAllOrders(adminId: string) {
   return ordersList;
 }
 
+export type OrdersPerMonth = {
+  month: string; // "MM-YYYY"
+  count: number;
+};
 
-export async function getOrdersPerMonth(adminId: string) {
-  const ordersPerMonth = await db.execute(sql`
+
+export async function getOrdersPerMonth(adminId: string): Promise<OrdersPerMonth[]> {
+  const result = await db.execute<OrdersPerMonth>(sql`
     SELECT
-    TO_CHAR(DATE_TRUNC("month",${ordersTable.createdAt}), "YYYY-MM") AS month,
+    TO_CHAR(DATE_TRUNC('month',${ordersTable.createdAt}), 'MM-YYYY') AS month,
     COUNT(*)::int AS count
     FROM ${ordersTable}
     WHERE ${ordersTable.adminId} = ${adminId} AND ${ordersTable.order_status} = 'completed'
@@ -53,19 +58,25 @@ export async function getOrdersPerMonth(adminId: string) {
     ORDER BY month ASC;
   `);
 
-  return ordersPerMonth
+  return result.rows;
 }
 
-export async function getRevenuePerMonth(adminId: string) {
-  const ordersPerMonth = await db.execute(sql`
+export type RevenuePerMonth = {
+  month: string; // "MM-YYYY"
+  revenue: number;
+};
+
+
+export async function getRevenuePerMonth(adminId: string): Promise<RevenuePerMonth[]> {
+  const result = await db.execute<RevenuePerMonth>(sql`
     SELECT
-    TO_CHAR(DATE_TRUNC("month",${ordersTable.createdAt}), "YYYY-MM") AS month,
-    SUM(Number(${ordersTable.price})::numeric)::float AS revenue
+    TO_CHAR(DATE_TRUNC('month',${ordersTable.createdAt}), 'MM-YYYY') AS month,
+    SUM(${ordersTable.price}::numeric)::float AS revenue
     FROM ${ordersTable}
     WHERE ${ordersTable.adminId} = ${adminId} AND ${ordersTable.order_status} = 'completed'
     GROUP BY month
     ORDER BY month ASC;
   `);
 
-  return ordersPerMonth
+  return result.rows;
 }
