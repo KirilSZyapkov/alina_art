@@ -2,6 +2,7 @@ import db from '@/drizzle/db';
 import {ordersTable} from '@/drizzle/schemas/orders.schema';
 import {eq} from 'drizzle-orm';
 import {OrderCreateInput} from "./order.zod_schema";
+import { sql } from "drizzle-orm";
 
 export async function createNewOrder(data: OrderCreateInput) {
   const rawData = {
@@ -38,4 +39,33 @@ export async function getAllOrders(adminId: string) {
   });
 
   return ordersList;
+}
+
+
+export async function getOrdersPerMonth(adminId: string) {
+  const ordersPerMonth = await db.execute(sql`
+    SELECT
+    TO_CHAR(DATE_TRUNC("month",${ordersTable.createdAt}), "YYYY-MM") AS month,
+    COUNT(*)::int AS count
+    FROM ${ordersTable}
+    WHERE ${ordersTable.adminId} = ${adminId} AND ${ordersTable.order_status} = 'completed'
+    GROUP BY month
+    ORDER BY month ASC;
+  `);
+
+  return ordersPerMonth
+}
+
+export async function getRevenuePerMonth(adminId: string) {
+  const ordersPerMonth = await db.execute(sql`
+    SELECT
+    TO_CHAR(DATE_TRUNC("month",${ordersTable.createdAt}), "YYYY-MM") AS month,
+    SUM(Number(${ordersTable.price})::numeric)::float AS revenue
+    FROM ${ordersTable}
+    WHERE ${ordersTable.adminId} = ${adminId} AND ${ordersTable.order_status} = 'completed'
+    GROUP BY month
+    ORDER BY month ASC;
+  `);
+
+  return ordersPerMonth
 }
