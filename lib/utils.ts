@@ -6,66 +6,66 @@ export function cn(...inputs: ClassValue[]) {
 };
 
 
-function f(monthData: any) {
+export function f(monthData: any) {
 
   const data = [
     {
-      month: 'January',
+      name: 'January',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'February',
+      name: 'February',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'March',
+      name: 'March',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'April',
+      name: 'April',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'May',
+      name: 'May',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'June',
+      name: 'June',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'July',
+      name: 'July',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'August',
+      name: 'August',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'September',
+      name: 'September',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'October',
+      name: 'October',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'November',
+      name: 'November',
       count: 0,
       revenue: 0,
     },
     {
-      month: 'December',
+      name: 'December',
       count: 0,
       revenue: 0,
     }
