@@ -58,7 +58,8 @@ export default async function DashboardPage() {
         </Card>
       </div>
       {/* Revenue Line Chart */}
-      <div>
+      <div className="flex flex-col gap-5">
+        <h2 className="w-full text-center font-bold text-3xl">Orders and Revenue</h2>
         <LineChartComponent month={month} revenuePerMonth={revenuePerMonth} ordersPerMonth={ordersPerMonth}/>
       </div>
 
