@@ -90,3 +90,25 @@ export async function getOrdersCount() {
 
   return result.rows.length;
 }
+
+export async function getAllNewOrders(adminId: string) {
+  const result = await db.execute(sql`
+  SELECT
+  COUNT(*)::int AS count
+  FROM ${ordersTable}
+  WHERE ${ordersTable.adminId} =${adminId} AND ${ordersTable.order_status} = 'new'
+  `);
+
+  return result.rows.length;
+}
+
+export async function getAllCompletedOrders(adminId: string){
+  const result = await db.execute(sql`
+  SELECT
+  COUNT(*)::int AS count
+  FROM ${ordersTable}
+  WHERE ${ordersTable.adminId} = ${adminId} AND ${ordersTable.order_status} = 'completed'
+  `);
+
+  return result.rows.length;
+}
