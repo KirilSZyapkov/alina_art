@@ -1,10 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { getProductsAction } from '@/app/actions/product.actions';
+
 
 export default function HelpPage() {
     const [openFaq, setOpenFaq] = useState<number | null>(0);
+    const [numProducts, setNumProducts] = useState(0);
+
+    useEffect(()=>{
+        async function fetch() {
+            const list = await getProductsAction();
+            setNumProducts(list.length);
+        };
+        fetch();
+    },[]);
 
     const faqs = [
         {
@@ -91,7 +102,7 @@ export default function HelpPage() {
                     </p>
                     <div className="grid sm:grid-cols-2 gap-4 mt-6">
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-purple-600 mb-1">100+</div>
+                            <div className="text-3xl font-bold text-purple-600 mb-1">{numProducts}</div>
                             <p className="text-slate-600">Произведения</p>
                         </div>
                         <div className="text-center">

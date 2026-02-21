@@ -7,9 +7,9 @@ import { ProductCreateInput } from './product.zod_schema';
 import { uploadProductImage } from './image.service';
 
 
-export async function getAllProducts(ownerId: string) {
+export async function getAllProducts(ownerId?: string) {
   return db.query.productsTable.findMany({
-    where: eq(productsTable.ownerId, ownerId),
+    // where: eq(productsTable.ownerId, ownerId),
     with: {
       images: true,
     },

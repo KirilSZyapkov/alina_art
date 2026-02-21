@@ -14,8 +14,12 @@ import z from 'zod';
 
 
 export async function getProductsAction() {
-  const {userId} = await auth();
-  if (!userId) throw new Error('Unauthorized');
+  
+  // Да махна тестовия userId и да откоригирам ключа, с който се търсят конкретните продукти
+
+  // const {userId} = await auth();
+  // if (!userId) throw new Error('Unauthorized');
+  const userId = "";
   return getAllProducts(userId);
 }
 

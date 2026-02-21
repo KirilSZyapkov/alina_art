@@ -53,3 +53,9 @@ export async function getRevenuePerMonthAction(){
 
   return revenuePerMonth;
 }
+
+export async function getAllOrdersCountAction() {
+  const allOrders = await getAllOrders();
+  const count = allOrders.length;
+  return count;
+}

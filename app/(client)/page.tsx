@@ -2,10 +2,11 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from "next/link";
 import Image from "next/image";
-import { getAllProducts } from "@/lib/product.service";
+import { getProductsAction } from "../actions/product.actions";
+
 
 export default async function HomePage() {
-  const products = await getAllProducts();
+  const products = await getProductsAction();
 
   return (
     <article className="mx-auto max-w-7xl px-4 h-screen">
