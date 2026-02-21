@@ -65,11 +65,16 @@ export async function getAllNewOrdersAction(adminId: string) {
   const {userId} = await auth();
   if(!userId) throw new Error('Unauthorized');
 
-  const numCompletedOrders = await getAllCompletedOrders(userId);
+  const numNewdOrders = await getAllNewOrders(userId);
 
-  return numCompletedOrders;
+  return numNewdOrders;
 }
 
 export async function getAllCompletedOrdersAction(adminId: string){
-  
+  const {userId} = await auth();
+  if(!userId) throw new Error('Unauthorized');
+
+  const numCompletedOrders = await getAllCompletedOrders(userId);
+
+  return numCompletedOrders;
 }
