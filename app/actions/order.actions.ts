@@ -9,7 +9,9 @@ import {
   getAllOrders,
   getOrdersPerMonth,
   getRevenuePerMonth,
-  getOrdersCount
+  getOrdersCount,
+  getAllCompletedOrders,
+  getAllNewOrders
 } from '@/lib/order.service';
 
 export async function createNewOrderAction(data: OrderCreateInput){
@@ -57,4 +59,17 @@ export async function getRevenuePerMonthAction(){
 
 export async function getAllOrdersCountAction() {
   return await getOrdersCount();
+}
+
+export async function getAllNewOrdersAction(adminId: string) {
+  const {userId} = await auth();
+  if(!userId) throw new Error('Unauthorized');
+
+  const numCompletedOrders = await getAllCompletedOrders(userId);
+
+  return numCompletedOrders;
+}
+
+export async function getAllCompletedOrdersAction(adminId: string){
+  
 }
