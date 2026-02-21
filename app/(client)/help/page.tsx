@@ -3,16 +3,20 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { getProductsAction } from '@/app/actions/product.actions';
+import { getAllOrdersCountAction } from '@/app/actions/order.actions';
 
 
 export default function HelpPage() {
     const [openFaq, setOpenFaq] = useState<number | null>(0);
     const [numProducts, setNumProducts] = useState(0);
+    const [numClients, setNumClients] = useState(0);
 
     useEffect(()=>{
         async function fetch() {
             const list = await getProductsAction();
+            const count = await getAllOrdersCountAction();
             setNumProducts(list.length);
+            setNumClients(count);
         };
         fetch();
     },[]);
@@ -106,7 +110,7 @@ export default function HelpPage() {
                             <p className="text-slate-600">Произведения</p>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-1">50+</div>
+                            <div className="text-3xl font-bold text-blue-600 mb-1">{numClients}</div>
                             <p className="text-slate-600">Доволни клиенти</p>
                         </div>                        
                     </div>

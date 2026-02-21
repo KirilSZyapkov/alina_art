@@ -1,7 +1,7 @@
 import db from '@/drizzle/db';
-import {ordersTable} from '@/drizzle/schemas/orders.schema';
-import {eq} from 'drizzle-orm';
-import {OrderCreateInput} from "./order.zod_schema";
+import { ordersTable } from '@/drizzle/schemas/orders.schema';
+import { eq } from 'drizzle-orm';
+import { OrderCreateInput } from "./order.zod_schema";
 import { sql } from "drizzle-orm";
 
 export async function createNewOrder(data: OrderCreateInput) {
@@ -19,8 +19,8 @@ export async function createNewOrder(data: OrderCreateInput) {
   return newOrder;
 }
 
-export async function getOrderById(id:string) {
-  if(!id){
+export async function getOrderById(id: string) {
+  if (!id) {
     throw new Error("Product id is required!");
   };
 
@@ -79,4 +79,14 @@ export async function getRevenuePerMonth(adminId: string): Promise<RevenuePerMon
   `);
 
   return result.rows;
+}
+
+export async function getOrdersCount() {
+  const result = await db.execute(sql`
+    SELECT
+    COUNT(*)::int AS count
+    FROM ${ordersTable}
+  `);
+
+  return result.rows.length;
 }

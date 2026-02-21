@@ -8,7 +8,8 @@ import {
   getOrderById,
   getAllOrders,
   getOrdersPerMonth,
-  getRevenuePerMonth
+  getRevenuePerMonth,
+  getOrdersCount
 } from '@/lib/order.service';
 
 export async function createNewOrderAction(data: OrderCreateInput){
@@ -55,7 +56,5 @@ export async function getRevenuePerMonthAction(){
 }
 
 export async function getAllOrdersCountAction() {
-  const allOrders = await getAllOrders();
-  const count = allOrders.length;
-  return count;
+  return await getOrdersCount();
 }
